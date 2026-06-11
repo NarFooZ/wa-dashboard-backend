@@ -5,16 +5,16 @@ import db from '../db/database.js';
 
 const router = Router();
 
-// GET /api/billing/rules — All billing rules
+// GET /api/billing/rules â€” All billing rules
 router.get('/rules', requireAuth, (req, res) => {
   const rules = db.prepare('SELECT * FROM billing_rules ORDER BY created_at DESC').all();
   res.json(rules);
 });
 
-// POST /api/billing/rules — Create new billing rule
+// POST /api/billing/rules â€” Create new billing rule
 router.post('/rules', requireAuth, (req, res) => {
   const { keyword, emoji, amount, description } = req.body;
-  if (!keyword || !amount) return res.status(400).json({ error: 'الكلمة والمبلغ مطلوبان' });
+  if (!keyword || !amount) return res.status(400).json({ error: 'ط§ظ„ظƒظ„ظ…ط© ظˆط§ظ„ظ…ط¨ظ„ط؛ ظ…ط·ظ„ظˆط¨ط§ظ†' });
 
   const result = db.prepare(`
     INSERT INTO billing_rules (keyword, emoji, amount, description)
@@ -24,7 +24,7 @@ router.post('/rules', requireAuth, (req, res) => {
   res.json({ success: true, id: result.lastInsertRowid });
 });
 
-// PATCH /api/billing/rules/:id — Update billing rule
+// PATCH /api/billing/rules/:id â€” Update billing rule
 router.patch('/rules/:id', requireAuth, (req, res) => {
   const { keyword, emoji, amount, description, is_active } = req.body;
   db.prepare(`
@@ -35,18 +35,18 @@ router.patch('/rules/:id', requireAuth, (req, res) => {
       description = COALESCE(?, description),
       is_active = COALESCE(?, is_active)
     WHERE id = ?
-  `).run(keyword, emoji, amount ? parseFloat(amount) : null, description, is_active ?? null, req.params.id);
+  `).run(keyword ?? null, emoji ?? null, amount ? parseFloat(amount) : null, description ?? null, is_active ?? null, req.params.id);
 
   res.json({ success: true });
 });
 
-// DELETE /api/billing/rules/:id — Delete billing rule
+// DELETE /api/billing/rules/:id â€” Delete billing rule
 router.delete('/rules/:id', requireAuth, (req, res) => {
   db.prepare('DELETE FROM billing_rules WHERE id = ?').run(req.params.id);
   res.json({ success: true });
 });
 
-// GET /api/billing/stats — Overall billing stats
+// GET /api/billing/stats â€” Overall billing stats
 router.get('/stats', requireAuth, (req, res) => {
   const stats = db.prepare(`
     SELECT
@@ -68,7 +68,7 @@ router.get('/stats', requireAuth, (req, res) => {
   res.json({ ...stats, totalBalance: totalBalance.total || 0, recentTransactions: recentTx });
 });
 
-// GET /api/billing/transactions — All transactions
+// GET /api/billing/transactions â€” All transactions
 router.get('/transactions', requireAuth, (req, res) => {
   const { limit = 50, offset = 0, type } = req.query;
   const typeFilter = type ? `AND t.type = '${type}'` : '';
