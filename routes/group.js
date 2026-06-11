@@ -88,7 +88,7 @@ router.delete('/admin', requireAuth, async (req, res) => {
   if (!waId) return res.status(400).json({ error: 'waId مطلوب' });
 
   try {
-    const result = await greenApi.removeGroupAdmin(GROUP_ID(), waId);
+    const result = await greenApi.removeAdmin(GROUP_ID(), waId);
     db.prepare('UPDATE members SET is_admin = 0 WHERE wa_id = ?').run(waId);
     res.json({ success: true, result });
   } catch (err) {
