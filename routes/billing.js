@@ -35,7 +35,7 @@ router.patch('/rules/:id', requireAuth, (req, res) => {
       description = COALESCE(?, description),
       is_active = COALESCE(?, is_active)
     WHERE id = ?
-  `).run(keyword, emoji, amount ? parseFloat(amount) : null, description, is_active, req.params.id);
+  `).run(keyword, emoji, amount ? parseFloat(amount) : null, description, is_active ?? null, req.params.id);
 
   res.json({ success: true });
 });
@@ -86,3 +86,4 @@ router.get('/transactions', requireAuth, (req, res) => {
 });
 
 export default router;
+
