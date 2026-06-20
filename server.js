@@ -12,6 +12,8 @@ import authRoutes from './routes/auth.js';
 import groupRoutes from './routes/group.js';
 import membersRoutes from './routes/members.js';
 import billingRoutes from './routes/billing.js';
+import adminsRoutes from './routes/admins.js';
+import settingsRoutes from './routes/settings.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -32,6 +34,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/group', groupRoutes);
 app.use('/api/members', membersRoutes);
 app.use('/api/billing', billingRoutes);
+app.use('/api/admins', adminsRoutes);
+app.use('/api/settings', settingsRoutes);
 
 // ─── Webhook (Green API sends here) ──────────────────────
 app.post('/webhook', async (req, res) => {

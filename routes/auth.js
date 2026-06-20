@@ -17,7 +17,7 @@ router.post('/login', (req, res) => {
   }
 
   const token = generateToken(admin);
-  res.json({ token, username: admin.username });
+  res.json({ token, username: admin.username, role: admin.role || 'super_admin' });
 });
 
 // POST /api/auth/change-password

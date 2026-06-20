@@ -1,4 +1,4 @@
-// routes/group.js
+﻿// routes/group.js
 import { Router } from 'express';
 import { requireAuth } from '../middleware/auth.js';
 import db, { upsertMember } from '../db/database.js';
@@ -7,7 +7,7 @@ import * as greenApi from '../lib/greenApi.js';
 const router = Router();
 const GROUP_ID = () => process.env.GROUP_ID;
 
-// GET /api/group/info — Get group info + participants
+// GET /api/group/info â€” Get group info + participants
 router.get('/info', requireAuth, async (req, res) => {
   try {
     const data = await greenApi.getGroupInfo(GROUP_ID());
@@ -32,7 +32,7 @@ router.get('/info', requireAuth, async (req, res) => {
   }
 });
 
-// GET /api/group/status — WhatsApp instance status
+// GET /api/group/status â€” WhatsApp instance status
 router.get('/status', requireAuth, async (req, res) => {
   try {
     const status = await greenApi.getInstanceStatus();
@@ -42,10 +42,10 @@ router.get('/status', requireAuth, async (req, res) => {
   }
 });
 
-// PATCH /api/group/name — Change group name
+// PATCH /api/group/name â€” Change group name
 router.patch('/name', requireAuth, async (req, res) => {
   const { name } = req.body;
-  if (!name) return res.status(400).json({ error: 'الاسم مطلوب' });
+  if (!name) return res.status(400).json({ error: 'ط§ظ„ط§ط³ظ… ظ…ط·ظ„ظˆط¨' });
 
   try {
     const result = await greenApi.setGroupSubject(GROUP_ID(), name);
@@ -57,7 +57,7 @@ router.patch('/name', requireAuth, async (req, res) => {
   }
 });
 
-// PATCH /api/group/description — Change group description
+// PATCH /api/group/description â€” Change group description
 router.patch('/description', requireAuth, async (req, res) => {
   const { description } = req.body;
   try {
@@ -68,10 +68,10 @@ router.patch('/description', requireAuth, async (req, res) => {
   }
 });
 
-// POST /api/group/admin — Grant admin to member
+// POST /api/group/admin â€” Grant admin to member
 router.post('/admin', requireAuth, async (req, res) => {
   const { waId } = req.body;
-  if (!waId) return res.status(400).json({ error: 'waId مطلوب' });
+  if (!waId) return res.status(400).json({ error: 'waId ظ…ط·ظ„ظˆط¨' });
 
   try {
     const result = await greenApi.setGroupAdmin(GROUP_ID(), waId);
@@ -82,10 +82,10 @@ router.post('/admin', requireAuth, async (req, res) => {
   }
 });
 
-// DELETE /api/group/admin — Remove admin from member
+// DELETE /api/group/admin â€” Remove admin from member
 router.delete('/admin', requireAuth, async (req, res) => {
   const { waId } = req.body;
-  if (!waId) return res.status(400).json({ error: 'waId مطلوب' });
+  if (!waId) return res.status(400).json({ error: 'waId ظ…ط·ظ„ظˆط¨' });
 
   try {
     const result = await greenApi.removeAdmin(GROUP_ID(), waId);
@@ -96,10 +96,10 @@ router.delete('/admin', requireAuth, async (req, res) => {
   }
 });
 
-// DELETE /api/group/member — Remove member from group
+// DELETE /api/group/member â€” Remove member from group
 router.delete('/member', requireAuth, async (req, res) => {
   const { waId } = req.body;
-  if (!waId) return res.status(400).json({ error: 'waId مطلوب' });
+  if (!waId) return res.status(400).json({ error: 'waId ظ…ط·ظ„ظˆط¨' });
 
   try {
     const result = await greenApi.removeGroupParticipant(GROUP_ID(), waId);
@@ -109,10 +109,10 @@ router.delete('/member', requireAuth, async (req, res) => {
   }
 });
 
-// POST /api/group/message — Send message to group
+// POST /api/group/message â€” Send message to group
 router.post('/message', requireAuth, async (req, res) => {
   const { text } = req.body;
-  if (!text) return res.status(400).json({ error: 'النص مطلوب' });
+  if (!text) return res.status(400).json({ error: 'ط§ظ„ظ†طµ ظ…ط·ظ„ظˆط¨' });
 
   try {
     const result = await greenApi.sendGroupMessage(GROUP_ID(), text);
@@ -122,10 +122,10 @@ router.post('/message', requireAuth, async (req, res) => {
   }
 });
 
-// POST /api/group/webhook — Set webhook URL
+// POST /api/group/webhook â€” Set webhook URL
 router.post('/webhook', requireAuth, async (req, res) => {
   const { webhookUrl } = req.body;
-  if (!webhookUrl) return res.status(400).json({ error: 'webhookUrl مطلوب' });
+  if (!webhookUrl) return res.status(400).json({ error: 'webhookUrl ظ…ط·ظ„ظˆط¨' });
 
   try {
     const result = await greenApi.setWebhookUrl(webhookUrl);
